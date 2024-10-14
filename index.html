@@ -1,0 +1,858 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>XBind: Any-to-3D Generation via Hybrid Diffusion Supervision</title>
+  <link rel="shortcut icon" href="./static/our_gif/XBind_logo.ico" />
+
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
+        rel="stylesheet">
+
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+
+
+  <script defer src="./static/js/fontawesome.all.min.js"></script>
+  <script src="./static/js/bulma-carousel.min.js"></script>
+  <script src="./static/js/bulma-slider.min.js"></script>
+  <script src="./static/js/index.js"></script>
+
+</head>
+<body>
+
+
+<section class="hero">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <div class="column has-text-centered">
+          <h1 class="title is-1 publication-title has-text-centered">
+            <div style="display: flex; align-items: center; justify-content: center;">
+              <img id="teaser" width="20%" src="./static/our_gif/logo_name.png">
+            </div>
+          </h1>
+          <h2 class="title is-3 publication-title">Any-to-3D Generation via Hybrid Diffusion Supervision</h2>
+          
+
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="my-hr">
+  <hr>
+</div>
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <table>
+        <tr style="height: 100%;">
+          <td style="height: 100%;width:3%; text-align: center; vertical-align: middle; padding: 0;">
+            <div style="display: flex; justify-content: center; align-items: center; height: 100%;">
+              <img src="./static/our_gif/text_logo.png" alt="Image" style="width:100%;">
+            </div>
+          </td>
+          <td style="height: 100%;text-align: center; vertical-align: middle; padding: 0;">
+            <video loop="loop" preload="auto" autoplay muted>
+              <source src="./static/our_gif/text_candelabra_single.mp4" type="video/mp4">
+            </video>
+          </td>
+          <td style="height: 100%; text-align: center; vertical-align: middle; padding: 0;">
+            <video loop="loop" preload="auto" autoplay muted>
+              <source src="./static/our_gif/text_crown_single.mp4" type="video/mp4">
+            </video>
+          </td>
+          <td style="height: 100%;text-align: center; vertical-align: middle; padding: 0;">
+            <video loop="loop" preload="auto" autoplay muted>
+              <source src="./static/our_gif/text_knight_single.mp4" type="video/mp4">
+            </video>
+          </td>
+          <td style="height: 100%;text-align: center; vertical-align: middle; padding: 0;">
+            <video loop="loop" preload="auto" autoplay muted>
+              <source src="./static/our_gif/text_saguaro_single.mp4" type="video/mp4">
+            </video>
+          </td>
+          <td style="height: 100%;text-align: center; vertical-align: middle; padding: 0;">
+            <video loop="loop" preload="auto" autoplay muted>
+              <source src="./static/our_gif/text_motorcycle_single.mp4" type="video/mp4">
+            </video>
+          </td>
+          <td style="height: 100%; text-align: center; vertical-align: middle; padding: 0;">
+            <video loop="loop" preload="auto" autoplay muted>
+              <source src="./static/our_gif/text_butterfly_single.mp4" type="video/mp4">
+            </video>
+          </td>
+          <td style="height: 100%;text-align: center; vertical-align: middle; padding: 0;">
+            <video loop="loop" preload="auto" autoplay muted>
+              <source src="./static/our_gif/text_kingfisher_bird_single.mp4" type="video/mp4">
+            </video>
+          </td>
+          <td style="height: 100%;text-align: center; vertical-align: middle; padding: 0;">
+            <video loop="loop" preload="auto" autoplay muted>
+              <source src="./static/our_gif/text_sand_castle_single.mp4" type="video/mp4">
+            </video>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="9" text-align="center"><img style="width:100%;" src="./static/our_gif/line3.png"></td>
+        </tr>
+        <tr style="height: 100%;">
+          <td style="height: 100%;width:3%; text-align: center; vertical-align: middle; padding: 0;">
+            <div style="display: flex; justify-content: center; align-items: center; height: 100%;">
+              <img src="./static/our_gif/image_logo.png" alt="Image" style="width:90%;">
+            </div>
+          </td>
+          <td style="height: 100%;text-align: center; vertical-align: middle; padding: 0;">
+            <video loop="loop" preload="auto" autoplay muted>
+              <source src="./static/our_gif/image_army_single.mp4" type="video/mp4">
+            </video>
+          </td>
+          <td style="height: 100%; text-align: center; vertical-align: middle; padding: 0;">
+            <video loop="loop" preload="auto" autoplay muted>
+              <source src="./static/our_gif/image_Forbidden_single.mp4" type="video/mp4">
+            </video>
+          </td>
+          <td style="height: 100%;text-align: center; vertical-align: middle; padding: 0;">
+            <video loop="loop" preload="auto" autoplay muted>
+              <source src="./static/our_gif/image_broccoli_single.mp4" type="video/mp4">
+            </video>
+          </td>
+          <td style="height: 100%;text-align: center; vertical-align: middle; padding: 0;">
+            <video loop="loop" preload="auto" autoplay muted>
+              <source src="./static/our_gif/image_tower_single.mp4" type="video/mp4">
+            </video>
+          </td>
+          <td style="height: 100%;text-align: center; vertical-align: middle; padding: 0;">
+            <video loop="loop" preload="auto" autoplay muted> 
+              <source src="./static/our_gif/image_cowboy_single.mp4" type="video/mp4">
+            </video>
+          </td>
+          <td style="height: 100%; text-align: center; vertical-align: middle; padding: 0;">
+            <video loop="loop" preload="auto" autoplay muted>
+              <source src="./static/our_gif/image_lotus_single.mp4" type="video/mp4">
+            </video>
+          </td>
+          <td style="height: 100%;text-align: center; vertical-align: middle; padding: 0;">
+            <video loop="loop" preload="auto" autoplay muted>
+              <source src="./static/our_gif/image_hamburger.mp4" type="video/mp4">
+            </video>
+          </td>
+          <td style="height: 100%;text-align: center; vertical-align: middle; padding: 0;">
+            <video loop="loop" preload="auto" autoplay muted>
+              <source src="./static/our_gif/image_chess_single.mp4" type="video/mp4">
+            </video>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="9" text-align="center"><img style="width:100%;" src="./static/our_gif/line3.png"></td>
+        </tr>
+        <tr style="height: 100%;">
+          <td style="height: 100%;width:3%; text-align: center; vertical-align: middle; padding: 0;">
+            <div style="display: flex; justify-content: center; align-items: center; height: 100%;">
+              <img src="./static/our_gif/audio_logo.png" alt="Image" style="width:90%;">
+            </div>
+          </td>
+          <td style="height: 100%;text-align: center; vertical-align: middle; padding: 0;">
+            <video style="width: 90%;" loop="loop" preload="auto" autoplay muted>
+              <source src="./static/our_gif/audio_drum.mp4" type="video/mp4">
+            </video>
+          </td>
+          <td style="height: 100%; text-align: center; vertical-align: middle; padding: 0;">
+            <video loop="loop" preload="auto" autoplay muted>
+              <source src="./static/our_gif/audio_bird_single1.mp4" type="video/mp4">
+            </video>
+          </td>
+          <td style="height: 100%;text-align: center; vertical-align: middle; padding: 0;">
+            <video loop="loop" preload="auto" autoplay muted>
+              <source src="./static/our_gif/audio_horse_single.mp4" type="video/mp4">
+            </video>
+          </td>
+          <td style="height: 100%;text-align: center; vertical-align: middle; padding: 0;">
+            <video loop="loop" preload="auto" autoplay muted>
+              <source src="./static/our_gif/audio_gun1_single.mp4" type="video/mp4">
+            </video>
+          </td>
+          <td style="height: 100%;text-align: center; vertical-align: middle; padding: 0;">
+            <video loop="loop" preload="auto" autoplay muted>
+              <source src="./static/our_gif/audio_alarm_single1.mp4" type="video/mp4">
+            </video>
+          </td>
+          <td style="height: 100%; text-align: center; vertical-align: middle; padding: 0;">
+            <video loop="loop" preload="auto" autoplay muted>
+              <source src="./static/our_gif/audio_crow_single1.mp4" type="video/mp4">
+            </video>
+          </td>
+          <td style="height: 100%;text-align: center; vertical-align: middle; padding: 0;">
+            <video loop="loop" preload="auto" autoplay muted>
+              <source src="./static/our_gif/audio_dog_single1.mp4" type="video/mp4">
+            </video>
+          </td>
+          <td style="height: 100%;text-align: center; vertical-align: middle; padding: 0;">
+            <video loop="loop" preload="auto" autoplay muted>
+              <source src="./static/our_gif/audio_owl_single1.mp4" type="video/mp4">
+            </video>
+          </td>
+        </tr>
+      </table>
+    </div>
+    <hr>
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <video preload="auto" controls>
+          <source src="./static/our_gif/vedio_intro.mp4" type="video/mp4">
+        </video>
+      </div>
+    </div>
+    <hr>
+    <!-- Abstract. -->
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Abstract</h2>
+        <div class="content has-text-justified">
+          <p>
+            Recent advancements in 3D object generation have been driven by the robust priors provided by diffusion models.
+            However, current models are task-specific, serving only one modality at a time and requiring retraining to switch 
+            modalities. Given an image-to-3D model and a text prompt, a naive approach is to convert text prompts to images 
+            and then use the image-to-3D model for generation. This method is time-consuming and labor-intensive, leading to 
+            inevitable information loss due to modality conversion. To address this, we introduce XBind, a unified framework 
+            for any-to-3D generation using cross-modal pre-alignment techniques. XBind integrates an multimodal-aligned encoder 
+            with pre-trained diffusion models to generate 3D objects from various modalities, including text, images, and audio. 
+            We then introduce a new loss function, called Modality Similarity (MS) Loss, which aligns the encodings of the modality 
+            prompts and the rendered images, ensuring better alignment of the 3D object with multiple modalities. Additionally, 
+            Hybrid Diffusion Supervision and a Three-Phase Optimization process enhance the quality of generated 3D objects. 
+            Comprehensive experiments demonstrate XBind’s extensive generation capabilities in any-to-3D scenarios. 
+            To our knowledge, this is the first method to generate 3D objects from multiple modality prompts. 
+          </p>
+        </div>
+      </div>
+    </div>
+    <!--/ Abstract. -->
+
+    <hr>
+
+    <!-- Method. -->
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-full-width">
+        <h2 class="title is-3">Method</h2>
+        <img src="./static/our_gif/overview.png">
+        <div class="content has-text-justified">
+          <p>
+            <span style="font-weight: bold;">Overview of XBind.</span> Our method can accept multi-modal inputs and generate high-quality 3D objects conditioned on these 
+            modalities. Our framework utilizes a coarse-to-fine strategy, dividing the model optimization into three phases. 
+            The first phase involves coarse 3D object generation using N<span style="font-size: 14px;">E</span>RF as the 3D representation. 
+            XBind first encodes the input modality using a multimodal-aligned encoder, mapping it into a shared modality space. 
+            This aligned modality is then used as a condition for both 2D and 3D diffusion models.
+            XBind then leverages Hybrid Diffusion Supervision, which includes Planar and Stereoscopic supervision, to optimize 
+            the N<span style="font-size: 14px;">E</span>RF, 
+            generating a coarse but consistent 3D object. In the second phase, geometry optimization, the model extracts the N<span style="font-size: 14px;">E</span>RF 
+            representation as a DMT<span style="font-size: 14px;">ET</span> and refines the geometric details of the 3D mesh using the same supervision.
+            The third phase focuses on texture optimization, where the model enhances texture details with Hybrid Diffusion Supervision. 
+            After completing these phases, XBind produces high-quality 3D objects with consistent and rich geometric and textural details.
+          </p>
+        </div>
+      </div>
+    </div>
+    <!--/ Method. -->
+
+
+    <hr>
+
+
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-full-width">
+        <h2 class="title is-3">Multimodal Generation Results</h2>
+        <div class="content has-text-justified">
+          <p>
+            XBind accepts input in any modality, including text, images, and audio, to generate high-fidelity 3D objects with 
+            detailed geometry and texture that align with the modality prompts. All 3D objects were generated on a single Nvidia 
+            RTX 3090 GPU using the PyTorch library.
+          </p>
+          <h2 class="title is-4">Text-to-3D Generation</h2>
+          <p>
+            We present the high-quality results of 3D object generation guided by text prompts using XBind.
+          </p>
+        </div>
+        <table>
+          <tr style="height: 100%;">
+            <td style="height: 100%;width:20%; text-align: center; vertical-align: middle; padding: 0;">
+              <div style="display: flex; justify-content: center; align-items: center; height: 100%;">
+                <img src="./static/our_gif/text_logo.png" alt="Image" style="width:15%;">
+                <span style="font-size: 16px; font-weight: bold; margin-left: 8px;">
+                  A small saguaro cactus planted in a clay pot
+                </span>
+              </div>
+            </td>
+            <td style="height: 100%; width: 15%; text-align: center; vertical-align: middle; padding: 0;">
+              <img style="width:30%;" src="./static/our_gif/arrow.png">
+            </td>
+            <td style="height: 100%;">
+              <video loop="loop" preload="auto" autoplay muted>
+                <source src="./static/our_gif/text_saguaro.mp4" type="video/mp4">
+              </video>
+            </td>
+          </tr>
+          <tr>
+            <td colspan="3" text-align="center"><img style="width:100%;" src="./static/our_gif/line3.png"></td>
+          </tr>
+          <tr style="height: 100%;">
+            <td style="height: 100%;width:20%; text-align: center; vertical-align: middle; padding: 0;">
+              <div style="display: flex; justify-content: center; align-items: center; height: 100%;">
+                <img src="./static/our_gif/text_logo.png" alt="Image" style="width:15%;">
+                <span style="font-size: 16px; font-weight: bold; margin-left: 8px;">
+                  A kingfisher bird
+                </span>
+              </div>
+            </td>
+            <td style="height: 100%; width: 10%; text-align: center; vertical-align: middle; padding: 0;">
+              <img style="width:30%;" src="./static/our_gif/arrow.png">
+            </td>
+            <td>
+              <video loop="loop" preload="auto" autoplay muted>
+                <source src="./static/our_gif/text_kingfisher_bird.mp4" type="video/mp4">
+              </video>
+            </td>
+          </tr>
+          <tr></tr>
+        </table>
+        <p><span>&nbsp</span></p>
+        <span>&nbsp</span>
+        <div class="content has-text-justified">
+        <h2 class="title is-4">Image-to-3D Generation</h2>
+          <p>
+            XBind can also take images as input to generate high-fidelity 3D objects. Unlike most image-to-3D models, 
+            which focus on precise <span style="font-weight: bold; font-style: italic;">reconstruction</span>, XBind 
+            emphasizes <span style="font-weight: bold; font-style: italic;">generation</span>. As a result, our approach doesn't aim to 
+            replicate the scenes in the images exactly but instead creates new 3D objects that capture the style of the 
+            input images.
+          </p>
+        </div>
+          <table>
+            <tr style="height: 100%;">
+              <td style="height: 100%;width:20%; text-align: center; vertical-align: middle; padding: 0;">
+                  <img src="./static/our_gif/cupcake.jpg" alt="Image" style="width:90%;">
+              </td>
+              <td style="height: 100%; width: 15%; text-align: center; vertical-align: middle; padding: 0;">
+                <img style="width:30%;" src="./static/our_gif/arrow.png">
+              </td>
+              <td style="height: 100%;width: 90%;">
+                <video loop="loop" preload="auto" autoplay muted>
+                  <source src="./static/our_gif/image_cupcake.mp4" type="video/mp4">
+                </video>
+              </td>
+            </tr>
+            <tr>
+              <td colspan="3" text-align="center"><img style="width:100%;" src="./static/our_gif/line3.png"></td>
+            </tr>
+            <tr>
+              <td style="height: 100%;width:20%; text-align: center; vertical-align: middle; padding: 0;"> 
+                <img src="./static/our_gif/tower.jpg" alt="Image" style="width:100%;">
+            </td>
+            <td style="height: 100%; width: 10%; text-align: center; vertical-align: middle; padding: 0;">
+              <img style="width:30%;" src="./static/our_gif/arrow.png">
+            </td>
+            <td>
+              <video loop="loop" preload="auto" autoplay muted>
+                <source src="./static/our_gif/image_tower.mp4" type="video/mp4">
+              </video>
+            </td>
+            </tr>
+          </table>
+          <p><span>&nbsp</span></p>
+          <p><span>&nbsp</span></p>
+          <p><span>&nbsp</span></p>
+          <p><span>&nbsp</span></p>
+          <div class="content has-text-justified">
+            <h2 class="title is-4">Audio-to-3D Generation</h2>
+              <p>
+                XBind can take audio input to generate high-quality 3D objects that correspond to the audio information, 
+                offering new research avenues in the relatively unexplored field of audio-to-3D generation.
+              </p>
+          </div>
+          <table>
+            <tr style="height: 100%;">
+              <td style="height: 100%;width:20%; text-align: center; vertical-align: middle; padding: 0;">
+                <audio controls>
+                  <source src="./static/our_gif/gun.wav" type="audio/wav">
+                </audio>
+              </td>
+              <td style="height: 100%; width: 15%; text-align: center; vertical-align: middle; padding: 0;">
+                <img style="width:30%;" src="./static/our_gif/arrow.png">
+              </td>
+              <td style="height: 100%;width: 90%;">
+                <video loop="loop" preload="auto" autoplay muted>
+                  <source src="./static/our_gif/audio_gun1.mp4" type="video/mp4">
+                </video>
+              </td>
+            </tr>
+            <tr>
+              <td colspan="3" text-align="center"><img style="width:100%;" src="./static/our_gif/line3.png"></td>
+            </tr>
+            <tr>
+              <td style="height: 100%;width:20%; text-align: center; vertical-align: middle; padding: 0;"> 
+                <audio controls>
+                  <source src="./static/our_gif/alarm.wav" type="audio/wav">
+                </audio>
+            </td>
+            <td style="height: 100%; width: 10%; text-align: center; vertical-align: middle; padding: 0;">
+              <img style="width:30%;" src="./static/our_gif/arrow.png">
+            </td>
+            <td>
+              <video loop="loop" preload="auto" autoplay muted>
+                <source src="./static/our_gif/audio_alarm.mp4" type="video/mp4">
+              </video>
+            </td>
+            </tr>
+          </table>
+      </div>
+    </div>
+
+    <hr>
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-full-width">
+        <h2 class="title is-3">Comparison with Baselines</h2>
+        <div class="content has-text-justified">
+          <p>
+            As a pioneering work in Any-to-3D generation, we developed three baseline models for comparative analysis. 
+            These models utilize different diffusion models and loss functions across three phases of 3D object optimization. 
+            First, ZeroStableCDS-3D employs Zero-1-to-3 and Stable unCLIP as 3D and 2D diffusion priors, respectively, with CDS 
+            loss used for supervision in all phases. Second, StableSDS-3D uses only Stable unCLIP as the 2D diffusion prior, 
+            applying SDS loss throughout all phases. Finally, ZeroSDS-3D relies solely on Zero-1-to-3 as the 3D diffusion prior, 
+            with SDS loss applied in every phase.
+          </p>
+        </div>
+      </div>
+    </div>
+    <table>
+      <tr>
+        <td style="width: 150px; height: auto;text-align: center; vertical-align: middle; padding: 0;">
+          <span style="font-size: 18px; font-weight: bold; margin-left:0px;">
+            Condition
+          </span>
+        </td>
+        <td style="width:10%;height: auto;text-align: center; vertical-align: middle; padding: 0;">
+          <span>&nbsp</span>
+        </td>
+        <td style="width:190px;height:auto;text-align: center; vertical-align: middle; padding: 0;">
+          <span style="font-size: 18px; font-weight: bold; margin-left:0px;">
+            ZeroStableCDS-3D
+          </span>
+        </td>
+        <td style="width:200px;height:auto;text-align: center; vertical-align: middle; padding: 0;">
+          <span style="font-size: 18px; font-weight: bold; margin-left:0px;">
+            StableSDS-3D
+          </span>
+        </td>
+        <td style="width:200px;height:auto;text-align: center; vertical-align: middle; padding: 0;">
+          <span style="font-size: 18px; font-weight: bold; margin-left:0px;">
+            ZeroSDS-3D
+          </span>
+        </td>
+        <td style="width:200px;height:auto;text-align: center; vertical-align: middle; padding: 0;">
+          <span style="font-size: 18px; font-weight: bold; margin-left:0px;">
+            XBind
+          </span>
+        </td>
+      </tr>
+      <tr style="height: 100%;">
+        <td style="height: 100%;text-align: center; vertical-align: middle; padding: 0;">
+          <div style="display: flex; justify-content: center; align-items: center; height: 100%;">
+            <img style="width:25%; height: auto;" src="./static/our_gif/text_logo.png" alt="Image" >
+            <span style="font-size: 16px; font-weight: bold; margin-left: 0px;">
+              A vase with pink flowers
+            </span>
+          </div>
+        </td>
+        <td style="height: 100%;text-align: center; vertical-align: middle; padding: 0;">
+          <img style="width:30%;" src="./static/our_gif/arrow.png">
+        </td>
+        <td style="height: 100%;text-align: center; vertical-align: middle; padding: 0;">
+          <video style="width: 100%;" loop="loop" preload="auto" autoplay muted>
+            <source src="./static/our_gif/text_vase_cds.mp4" type="video/mp4">
+          </video>
+        </td>
+        <td style="height: 100%;text-align: center; vertical-align: middle; padding: 0;">
+          <video style="width: 100%;" loop="loop" preload="auto" autoplay muted>
+            <source src="./static/our_gif/text_vase_sds.mp4" type="video/mp4">
+          </video>
+        </td>
+        <td style="height: 100%;text-align: center; vertical-align: middle; padding: 0;">
+          <video style="width: 100%;" loop="loop" preload="auto" autoplay muted>
+            <source src="./static/our_gif/text_vase_z123.mp4" type="video/mp4">
+          </video>
+        </td>
+        <td style="height: 100%;text-align: center; vertical-align: middle; padding: 0;">
+          <video style="width: 100%;" loop="loop" preload="auto" autoplay muted>
+            <source src="./static/our_gif/text_vase.mp4" type="video/mp4">
+          </video>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="3" text-align="center"><img style="width:100%;" src="./static/our_gif/line3.png"></td>
+      </tr>
+      <tr>
+        <td style="height: 100%;text-align: center; vertical-align: middle; padding: 0;"> 
+          <img src="./static/our_gif/hamburger1.jpg" alt="Image" style="width:100%;">
+      </td>
+      <td style="height: 100%;text-align: center; vertical-align: middle; padding: 0;">
+        <img style="width:30%;" src="./static/our_gif/arrow.png">
+      </td>
+      <td style="height: 100%;text-align: center; vertical-align: middle; padding: 0;">
+        <video loop="loop" preload="auto" autoplay muted>
+          <source src="./static/our_gif/image_hamburger1_cds.mp4" type="video/mp4">
+        </video>
+      </td>
+      <td style="height: 100%;text-align: center; vertical-align: middle; padding: 0;">
+        <video loop="loop" preload="auto" autoplay muted>
+          <source src="./static/our_gif/image_hamburger1_sds.mp4" type="video/mp4">
+        </video>
+      </td>
+      <td style="height: 100%;text-align: center; vertical-align: middle; padding: 0;">
+        <video loop="loop" preload="auto" autoplay muted>
+          <source src="./static/our_gif/image_hamburger1_z123.mp4" type="video/mp4">
+        </video>
+      </td>
+      <td style="height: 100%;text-align: center; vertical-align: middle; padding: 0;">
+        <video loop="loop" preload="auto" autoplay muted>
+          <source src="./static/our_gif/image_hamburger.mp4" type="video/mp4">
+        </video>
+      </td>
+      </tr>
+      <tr>
+        <td colspan="3" text-align="center"><img style="width:100%;" src="./static/our_gif/line3.png"></td>
+      </tr>
+      <tr>
+        <td style="height: 100%; text-align: center; vertical-align: middle; padding: 0;"> 
+          <audio controls style="width: 100%;">
+            <source src="./static/our_gif/drum_kit.wav" type="audio/wav">
+          </audio>
+      </td>
+      <td style="height: 100%;  text-align: center; vertical-align: middle; padding: 0;">
+        <img style="width:30%;" src="./static/our_gif/arrow.png">
+      </td>
+      <td style="height: 100%;text-align: center; vertical-align: middle; padding: 0;">
+        <video loop="loop" preload="auto" autoplay muted>
+          <source src="./static/our_gif/audio_drum_cds.mp4" type="video/mp4">
+        </video>
+      </td>
+      <td style="height: 100%;text-align: center; vertical-align: middle; padding: 0;">
+        <video loop="loop" preload="auto" autoplay muted>
+          <source src="./static/our_gif/audio_drum_sds.mp4" type="video/mp4">
+        </video>
+      </td>
+      <td style="height: 100%;text-align: center; vertical-align: middle; padding: 0;">
+        <video loop="loop" preload="auto" autoplay muted>
+          <source src="./static/our_gif/audio_drum_z123.mp4" type="video/mp4">
+        </video>
+      </td>
+      <td style="height: 100%;text-align: center; vertical-align: middle; padding: 0;">
+        <video loop="loop" preload="auto" autoplay muted>
+          <source src="./static/our_gif/audio_drum.mp4" type="video/mp4">
+        </video>
+      </td>
+      </tr>
+    </table>
+    <hr>
+    <!-- Comparision with SOTA -->
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-full-width">
+        <h2 class="title is-3">Comparison with SOTA Methods in Text-to-3D Generation</h2>
+        <div class="content has-text-justified">
+          <p>
+            In the text-to-3D task, we compared XBind's 3D generation results with State-of-the-Art methods, 
+            including DreamFusion, Magic3D, Fantasia3D, and ProlificDreamer. The results demonstrate that XBind can 
+            generate high-quality 3D objects with rich geometry and texture while maintaining good 3D consistency, 
+            outperforming the SOTA methods in terms of performance.
+          </p>
+        </div>
+      </div>
+    </div>
+    <table>
+      <tr>
+        <td style="height: 100%;width: 20%;text-align: center; vertical-align: middle; padding: 0;">
+          <span style="font-size: 18px; font-weight: bold; margin-left:0px;">
+            DreamFusion
+          </span>
+        </td>
+        <td style="height: 100%;width: 20%;text-align: center; vertical-align: middle; padding: 0;">
+          <span style="font-size: 18px; font-weight: bold; margin-left:0px;">
+            Magic3D
+          </span>
+        </td>
+        <td style="height: 100%;width: 20%;text-align: center; vertical-align: middle; padding: 0;">
+          <span style="font-size: 18px; font-weight: bold; margin-left:0px;">
+            Fantasia3D
+          </span>
+        </td>
+        <td style="height: 100%;width: 20%;height:auto;text-align: center; vertical-align: middle; padding: 0;">
+          <span style="font-size: 18px; font-weight: bold; margin-left:0px;">
+            ProlificDreamer
+          </span>
+        </td>
+        <td style="height: 100%;width: 20%;text-align: center; vertical-align: middle; padding: 0;">
+          <span style="font-size: 18px; font-weight: bold; margin-left:0px;">
+            XBind
+          </span>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="5" text-align="center">
+          <span style="font-size: 16px; margin-left:0px;">
+            &nbsp
+          </span>
+        </td>
+      </tr>
+      <tr>
+        <td style="height: 100%;text-align: center; vertical-align: middle; padding: 0;">
+          <video loop="loop" preload="auto" autoplay muted>
+            <source src="./static/our_gif/text_butterfly_df_single.mp4" type="video/mp4">
+          </video>
+        </td>
+        <td style="height: 100%;text-align: center; vertical-align: middle; padding: 0;">
+          <video loop="loop" preload="auto" autoplay muted>
+            <source src="./static/our_gif/text_butterfly_magic3d_single.mp4" type="video/mp4">
+          </video>
+        </td>
+        <td style="height: 100%;text-align: center; vertical-align: middle; padding: 0;">
+          <video loop="loop" preload="auto" autoplay muted>
+            <source src="./static/our_gif/text_butterfly_fantasia_single.mp4" type="video/mp4">
+          </video>
+        </td>
+        <td style="height: 100%;height:auto;text-align: center; vertical-align: middle; padding: 0;">
+          <video loop="loop" preload="auto" autoplay muted>
+            <source src="./static/our_gif/text_butterfly_prolific_single.mp4" type="video/mp4">
+          </video>
+        </td>
+        <td style="height: 100%;text-align: center; vertical-align: middle; padding: 0;">
+          <video loop="loop" preload="auto" autoplay muted>
+            <source src="./static/our_gif/text_butterfly_single.mp4" type="video/mp4">
+          </video>
+        </td>
+      </tr>
+      <tr>
+        <td style="height: 100%;text-align: center; vertical-align: middle; padding: 0;" colspan="5" text-align="center">
+          <span style="font-size: 17px; margin-left:0px;">
+            Beautiful, intricate butterfly
+          </span>
+        </td>
+      </tr>
+      <tr>
+        <td style="height: 100%;text-align: center; vertical-align: middle; padding: 0;">
+          <video loop="loop" preload="auto" autoplay muted>
+            <source src="./static/our_gif/text_motorcycle_df_single.mp4" type="video/mp4">
+          </video>
+        </td>
+        <td style="height: 100%;text-align: center; vertical-align: middle; padding: 0;">
+          <video loop="loop" preload="auto" autoplay muted>
+            <source src="./static/our_gif/text_motorcycle_magic3d_single.mp4" type="video/mp4">
+          </video>
+        </td>
+        <td style="height: 100%;text-align: center; vertical-align: middle; padding: 0;">
+          <video loop="loop" preload="auto" autoplay muted>
+            <source src="./static/our_gif/text_motorcycle_fantasia_single.mp4" type="video/mp4">
+          </video>
+        </td>
+        <td style="height: 100%;height:auto;text-align: center; vertical-align: middle; padding: 0;">
+          <video loop="loop" preload="auto" autoplay muted>
+            <source src="./static/our_gif/text_motorcycle_prolific_single.mp4" type="video/mp4">
+          </video>
+        </td>
+        <td style="height: 100%;text-align: center; vertical-align: middle; padding: 0;">
+          <video loop="loop" preload="auto" autoplay muted>
+            <source src="./static/our_gif/text_motorcycle_single.mp4" type="video/mp4">
+          </video>
+        </td>
+      </tr>
+      <tr>
+        <td style="height: 100%;text-align: center; vertical-align: middle; padding: 0;" colspan="5" text-align="center">
+          <span style="font-size: 17px; margin-left:0px;">
+            A blue motorcycle
+          </span>
+        </td>
+      </tr>
+      <tr>
+        <td style="height: 100%;text-align: center; vertical-align: middle; padding: 0;">
+          <video loop="loop" preload="auto" autoplay muted>
+            <source src="./static/our_gif/text_knight_df_single.mp4" type="video/mp4">
+          </video>
+        </td>
+        <td style="height: 100%;text-align: center; vertical-align: middle; padding: 0;">
+          <video loop="loop" preload="auto" autoplay muted>
+            <source src="./static/our_gif/text_knight_magic3d_single.mp4" type="video/mp4">
+          </video>
+        </td>
+        <td style="height: 100%;text-align: center; vertical-align: middle; padding: 0;">
+          <video loop="loop" preload="auto" autoplay muted>
+            <source src="./static/our_gif/text_knight_fantasia_single.mp4" type="video/mp4">
+          </video>
+        </td>
+        <td style="height: 100%;height:auto;text-align: center; vertical-align: middle; padding: 0;">
+          <video loop="loop" preload="auto" autoplay muted>
+            <source src="./static/our_gif/text_knight_prolific_single.mp4" type="video/mp4">
+          </video>
+        </td>
+        <td style="height: 100%;text-align: center; vertical-align: middle; padding: 0;">
+          <video loop="loop" preload="auto" autoplay muted>
+            <source src="./static/our_gif/text_knight_single.mp4" type="video/mp4">
+          </video>
+        </td>
+      </tr>
+      <tr>
+        <td style="height: 100%;text-align: center; vertical-align: middle; padding: 0;" colspan="5" text-align="center">
+          <span style="font-size: 17px; margin-left:0px;">
+            A knight chopping wood
+          </span>
+        </td>
+      </tr>
+      <tr>
+        <td style="height: 100%;text-align: center; vertical-align: middle; padding: 0;">
+          <video loop="loop" preload="auto" autoplay muted>
+            <source src="./static/our_gif/text_donut_df_single.mp4" type="video/mp4">
+          </video>
+        </td>
+        <td style="height: 100%;text-align: center; vertical-align: middle; padding: 0;">
+          <video loop="loop" preload="auto" autoplay muted>
+            <source src="./static/our_gif/text_donut_magic3d_single.mp4" type="video/mp4">
+          </video>
+        </td>
+        <td style="height: 100%;text-align: center; vertical-align: middle; padding: 0;">
+          <video loop="loop" preload="auto" autoplay muted>
+            <source src="./static/our_gif/text_donut_fantasia_single.mp4" type="video/mp4">
+          </video>
+        </td>
+        <td style="height: 100%;height:auto;text-align: center; vertical-align: middle; padding: 0;">
+          <video loop="loop" preload="auto" autoplay muted>
+            <source src="./static/our_gif/text_donut_prolific_single.mp4" type="video/mp4">
+          </video>
+        </td>
+        <td style="height: 100%;text-align: center; vertical-align: middle; padding: 0;">
+          <video loop="loop" preload="auto" autoplay muted>
+            <source src="./static/our_gif/text_donut_single1.mp4" type="video/mp4">
+          </video>
+        </td>
+      </tr>
+      <tr>
+        <td style="height: 100%;text-align: center; vertical-align: middle; padding: 0;" colspan="5" text-align="center">
+          <span style="font-size: 17px; margin-left:0px;">
+            A photo of the Donut
+          </span>
+        </td>
+      </tr>
+      <tr>
+        <td style="height: 100%;text-align: center; vertical-align: middle; padding: 0;">
+          <video loop="loop" preload="auto" autoplay muted>
+            <source src="./static/our_gif/text_candelabra_df_single.mp4" type="video/mp4">
+          </video>
+        </td>
+        <td style="height: 100%;text-align: center; vertical-align: middle; padding: 0;">
+          <video loop="loop" preload="auto" autoplay muted>
+            <source src="./static/our_gif/text_candelabra_magic3d_single.mp4" type="video/mp4">
+          </video>
+        </td>
+        <td style="height: 100%;text-align: center; vertical-align: middle; padding: 0;">
+          <video loop="loop" preload="auto" autoplay muted>
+            <source src="./static/our_gif/text_candelabra_fantasia_single.mp4" type="video/mp4">
+          </video>
+        </td>
+        <td style="height: 100%;height:auto;text-align: center; vertical-align: middle; padding: 0;">
+          <video loop="loop" preload="auto" autoplay muted>
+            <source src="./static/our_gif/text_candelabra_prolific_single.mp4" type="video/mp4">
+          </video>
+        </td>
+        <td style="height: 100%;text-align: center; vertical-align: middle; padding: 0;">
+          <video loop="loop" preload="auto" autoplay muted>
+            <source src="./static/our_gif/text_candelabra_single.mp4" type="video/mp4">
+          </video>
+        </td>
+      </tr>
+      <tr>
+        <td style="height: 100%;text-align: center; vertical-align: middle; padding: 0;" colspan="5" text-align="center">
+          <span style="font-size: 17px; margin-left:0px;">
+            A silver candelabra has candles lit
+          </span>
+        </td>
+      </tr>
+      <tr>
+        <td style="height: 100%;text-align: center; vertical-align: middle; padding: 0;">
+          <video loop="loop" preload="auto" autoplay muted>
+            <source src="./static/our_gif/text_kingfisher_bird_df_single.mp4" type="video/mp4">
+          </video>
+        </td>
+        <td style="height: 100%;text-align: center; vertical-align: middle; padding: 0;">
+          <video loop="loop" preload="auto" autoplay muted>
+            <source src="./static/our_gif/text_kingfisher_bird_magic3d_single.mp4" type="video/mp4">
+          </video>
+        </td>
+        <td style="height: 100%;text-align: center; vertical-align: middle; padding: 0;">
+          <video loop="loop" preload="auto" autoplay muted>
+            <source src="./static/our_gif/text_kingfisher_bird_fantasia_single.mp4" type="video/mp4">
+          </video>
+        </td>
+        <td style="height: 100%;height:auto;text-align: center; vertical-align: middle; padding: 0;">
+          <video loop="loop" preload="auto" autoplay muted>
+            <source src="./static/our_gif/text_kingfisher_bird_prolific_single.mp4" type="video/mp4">
+          </video>
+        </td>
+        <td style="height: 100%;text-align: center; vertical-align: middle; padding: 0;">
+          <video loop="loop" preload="auto" autoplay muted>
+            <source src="./static/our_gif/text_kingfisher_bird_single.mp4" type="video/mp4">
+          </video>
+        </td>
+      </tr>
+      <tr>
+        <td style="height: 100%;text-align: center; vertical-align: middle; padding: 0;" colspan="5" text-align="center">
+          <span style="font-size: 17px; margin-left:0px;">
+            A kingfisher bird
+          </span>
+        </td>
+      </tr>
+      <tr>
+        <td style="height: 100%;text-align: center; vertical-align: middle; padding: 0;">
+          <video loop="loop" preload="auto" autoplay muted>
+            <source src="./static/our_gif/text_saguaro_df_single.mp4" type="video/mp4">
+          </video>
+        </td>
+        <td style="height: 100%;text-align: center; vertical-align: middle; padding: 0;">
+          <video loop="loop" preload="auto" autoplay muted>
+            <source src="./static/our_gif/text_saguaro_magic3d_single.mp4" type="video/mp4">
+          </video>
+        </td>
+        <td style="height: 100%;text-align: center; vertical-align: middle; padding: 0;">
+          <video loop="loop" preload="auto" autoplay muted>
+            <source src="./static/our_gif/text_saguaro_fantasia_single.mp4" type="video/mp4">
+          </video>
+        </td>
+        <td style="height: 100%;height:auto;text-align: center; vertical-align: middle; padding: 0;">
+          <video loop="loop" preload="auto" autoplay muted>
+            <source src="./static/our_gif/text_saguaro_prolific_single.mp4" type="video/mp4">
+          </video>
+        </td>
+        <td style="height: 100%;text-align: center; vertical-align: middle; padding: 0;">
+          <video loop="loop" preload="auto" autoplay muted>
+            <source src="./static/our_gif/text_saguaro_single.mp4" type="video/mp4">
+          </video>
+        </td>
+      </tr>
+      <tr>
+        <td style="height: 100%;text-align: center; vertical-align: middle; padding: 0;" colspan="5" text-align="center">
+          <span style="font-size: 17px; margin-left:0px;">
+            A small saguaro cactus planted in a clay pot
+          </span>
+        </td>
+      </tr>
+    </table>
+
+
+  </div>
+</section>
+
+
+
+
+</body>
+</html>
